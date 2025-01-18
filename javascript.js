@@ -70,8 +70,13 @@ function playGame() {
         console.log("Current Human score: " + humanScore);
         console.log("Current Computer score: " + computerScore);
     }
-    console.log("Total Human score: " + humanScore);
-    console.log("Total Computer score: " + computerScore);
+    if (humanScore > computerScore) {
+        console.log("The winner is Human with total score: " + humanScore);
+    } else if (humanScore < computerScore) {
+        console.log("The winner is Computer with total score: " + computerScore);
+    } else {
+        console.log("The game resulted in a draw");
+    }
 }
 
 playGame();
