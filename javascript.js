@@ -1,3 +1,6 @@
+let humanScore = 0;
+let computerScore = 0;
+
 function getComputerChoice() {
     let rng = Math.floor(Math.random() * 3);
     if (rng === 0) {
@@ -54,29 +57,47 @@ function playRound(humanChoice, computerChoice) {
     }
 }
 
-function playGame() {
-    let humanScore = 0;
-    let computerScore = 0;
-
-    for (let i = 0; i < 5; i++) {
-        const humanSelection = getHumanChoice();
-        const computerSelection = getComputerChoice();
-        let result = playRound(humanSelection, computerSelection);
-        if (result === "win") {
-            humanScore++;
-        } else if (result === "lose") {
-            computerScore++;
-        }
-        console.log("Current Human score: " + humanScore);
-        console.log("Current Computer score: " + computerScore);
-    }
-    if (humanScore > computerScore) {
-        console.log("The winner is Human with total score: " + humanScore);
-    } else if (humanScore < computerScore) {
-        console.log("The winner is Computer with total score: " + computerScore);
+function playRoundButton(playerSelection) {
+    const computerSelection = getComputerChoice();
+    const container = document.createElement("div");
+    let result = playRound(playerSelection, computerSelection);
+    if (result === "win") {
+        humanScore++;
+        container.textContent = "You win!";
+    } else if (result === "lose") {
+        computerScore++;
+        container.textContent = "You lose!";
     } else {
-        console.log("The game resulted in a draw");
+        container.textContent = "It is a tie";
+    }
+    body.appendChild(container);
+    currentScoreContainer.textContent = `Current human score: ${humanScore} Current computer score: ${computerScore}`;
+    if (humanScore === 5) {
+        container.textContent = "The winner is Human with total score: " + humanScore;
+        body.appendChild(container);
+    }
+    if (computerScore === 5) {
+        container.textContent = "The winner is Computer with total score: " + computerScore;
+        body.appendChild(container);
     }
 }
 
-playGame();
+const body = document.querySelector("body");
+const currentScoreContainer = document.createElement("div")
+currentScoreContainer.textContent = `Current human score: ${humanScore} Current computer score: ${computerScore}`;
+body.appendChild(currentScoreContainer);
+
+const rockButton = document.createElement("button");
+rockButton.textContent = "Rock";
+rockButton.addEventListener("click", () => playRoundButton("rock"));
+body.appendChild(rockButton);
+
+const paperButton = document.createElement("button");
+paperButton.textContent = "Paper";
+paperButton.addEventListener("click", () => playRoundButton("paper"));
+body.appendChild(paperButton);
+
+const scissorsButton = document.createElement("button");
+scissorsButton.textContent = "Scissors";
+scissorsButton.addEventListener("click", () => playRoundButton("scissors"));
+body.appendChild(scissorsButton);
